@@ -271,7 +271,9 @@ output HDMI-A-2 pos 1920 0 res 1920x1080@75Hz
 #bindsym $mod+$alt+e output eDP-1 enable
 
 # Set background
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+# output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg /usr/share/backgrounds/xfce/opole-sky.jpg fill
+# output * bg /usr/share/backgrounds/xfce/park.jpg fill
 
 for_window [class="openmw"] inhibit_idle focus
 for_window [class="DaggerfallUnity.x86_64"] inhibit_idle focus
