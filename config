@@ -18,8 +18,9 @@ set $right l
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 #font pango:Cantarell Mono 11
-font pango:Droid Sans Mono 11
+#font pango:Droid Sans Mono 11
 
+font pango:UbuntuMono Nerd Font 13
 # Screen lock
 #set $lock loginctl lock-session
 #set $slock swaylock --daemonize -i ~/Pictures/vulcanart.png
@@ -52,9 +53,10 @@ exec --no-startup-id mako
 #
 # exec --no-startup-id nm-applet
 
-#exec --no-startup-id nextcloud
-#exec --no-startup-id keepassxc
-
+exec --no-startup-id nextcloud
+exec --no-startup-id keepassxc
+exec --no-startup-id synology-drive
+# exec --no-startup-id dropbox-cli start
 # redshift fork
 exec --no-startup-id gammastep -m wayland
 
@@ -84,7 +86,8 @@ bindsym $mod+Shift+q kill
 bindsym $mod+F4 kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id rofi -show run
+#bindsym $mod+d exec --no-startup-id rofi -show run
+bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun -display-drun "RUN: "
 #bindsym $mod+d exec --no-startup-id kickoff
 
 #bindsym $mod+d exec bemenu-run
@@ -228,7 +231,7 @@ bar {
   colors {
       statusline #ffffff
       background #2f343f
-      inactive_workspace #32323200 #32323200 #5c5c5c
+      inactive_workspace #323232 #323232 #5c5c5c
   }
 
   # status bar script
@@ -249,12 +252,12 @@ input type:keyboard {
   repeat_rate 40
 }
 
-# screens
+# Screens
 output DP-1 pos 0 0 res 1920x1080@75Hz
 output HDMI-A-2 pos 1920 0 res 1920x1080@75Hz
 #bindsym $mod+$alt+e output eDP-1 enable
 
-# set background
+# Set background
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
 for_window [class="openmw"] inhibit_idle focus
@@ -268,3 +271,9 @@ for_window [app_id="mednafen"] inhibit_idle focus
 for_window [app_id="mame"] inhibit_idle focus
 for_window [app_id="firefox" title="Firefox — Sharing Indicator"] kill
 for_window [app_id="qjackctl" title="^JACK Audio.*$"] floating enable
+
+# Start Polkit
+exec /usr/bin/polkit-dumb-agent
+
+# Restart Tray applications
+exec_always --no-startup-id "~/.config/sway/tray.sh"
