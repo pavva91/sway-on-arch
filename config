@@ -22,11 +22,13 @@ set $right l
 
 font pango:UbuntuMono Nerd Font 13
 # Screen lock
+set $lockman exec bash ~/.config/sway/lockman.sh
+bindsym $mod+z exec $lockman
 #set $lock loginctl lock-session
 #set $slock swaylock --daemonize -i ~/Pictures/vulcanart.png
 
 #bindsym $mod+z exec $lock
-bindsym $mod+z exec swaylock -c 000000
+# bindsym $mod+z exec swaylock -c 000000
 # lock and shut screen after timeout and before suspend
 #
 # NOTE: normally locking the session will cause swayidle to start swaylock
@@ -34,13 +36,23 @@ bindsym $mod+z exec swaylock -c 000000
 # triggers too late (after resuming), leaving the screen unprotected for a
 # short amount of time after resume, hence the needing of explicitly locking
 # the screen with swaylock on "before-sleep"
+
+# exec swayidle -w \
+#   timeout 300 '$lock' \
+#   timeout 305 'swaymsg "output * dpms off"' \
+#   resume 'swaymsg "output * dpms on"' \
+#   before-sleep '$slock && $lock' \
+#   lock '$slock' \
+#   unlock 'pkill -KILL swaylock'
+
+# set $lock swaylock -c 550000
+set $lock swaylock --clock --indicator --screenshots --effect-scale 0.4 --effect-vignette 0.2:0.5 --effect-blur 4x2 --datestr "%a %e.%m.%Y" --timestr "%k:%M"
+
 exec swayidle -w \
-  timeout 300 '$lock' \
-  timeout 305 'swaymsg "output * dpms off"' \
-  resume 'swaymsg "output * dpms on"' \
-  before-sleep '$slock && $lock' \
-  lock '$slock' \
-  unlock 'pkill -KILL swaylock'
+    timeout 600 $lock \
+    timeout 570 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep $lock
 
 # startup apps
 
@@ -54,7 +66,8 @@ exec --no-startup-id mako
 # exec --no-startup-id nm-applet
 
 exec --no-startup-id nextcloud
-exec --no-startup-id keepassxc
+# exec --no-startup-id keepassxc
+exec --no-startup-id env QT_SCALE_FACTOR=1.01 keepassxc
 exec --no-startup-id synology-drive
 # exec --no-startup-id dropbox-cli start
 # redshift fork
@@ -277,3 +290,6 @@ exec /usr/bin/polkit-dumb-agent
 
 # Restart Tray applications
 exec_always --no-startup-id "~/.config/sway/tray.sh"
+
+# startup sound, because why not?
+exec --no-startup-id mpv ~/Music/startup_audio/Microsoft\ Windows\ XP\ Startup\ Sound-7nQ2oiVqKHw.opus
