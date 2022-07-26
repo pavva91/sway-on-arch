@@ -114,7 +114,7 @@ bindsym $alt+Print exec ~/.config/sway/screenshot.sh active_window
 # border and decoration toggle
 default_border pixel
 
-bindsym $mod+c border toggle
+bindsym $alt+c border toggle
 
 # change focus
 bindsym $mod+$left focus left
